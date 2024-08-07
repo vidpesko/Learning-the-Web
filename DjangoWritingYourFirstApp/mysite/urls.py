@@ -16,6 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from debug_toolbar.toolbar import debug_toolbar_urls
+
+from . import settings
 
 
 urlpatterns = [
@@ -25,3 +28,8 @@ urlpatterns = [
     # polls app
     path("polls/", include("polls.urls"))
 ]
+
+if not settings.TESTING:
+    urlpatterns = [
+        *urlpatterns,
+    ] + debug_toolbar_urls()
